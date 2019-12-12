@@ -1,0 +1,51 @@
+<div class="ui info message" *ngIf='message.message ; else getTable'>
+  <div class="header">
+    {{message.message}}
+  </div>
+  <ul class="list">
+    <li> Back to employee record? <a routerLink='/' (click)='clearMessage()'> CLICK HERE</a> </li>
+  </ul>
+</div>
+
+<ng-template #getTable>
+<table class="ui blue celled table table-hover text-center " *ngIf='employees.length ; else empty'>
+    <thead>
+      <tr>
+        <th>DNI</th>
+        <th>NAME</th>
+        <th>SURNAME</th>
+        <th>PHONE</th>
+        <th>ADDRESS</th>
+        <th>DELETE / EDIT</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor = 'let employee of employees'>
+        <td>{{employee.document}}</td>
+        <td>{{employee.name}}</td>
+        <td>{{employee.surname}}</td>
+        <td>{{employee.phone}}</td>
+        <td>{{employee.address}}</td>
+        <td>
+          <a class="ui button basic icon" data-tooltip="Delete" (click)='deleteEmployee(employee.id)' data-position="top center">
+            <i class="trash icon"></i>
+          </a>
+          <a class="ui button basic icon" data-tooltip="Edit" [routerLink]="['/employees/edit', employee.id]"  data-position="top center">
+              <i class="cut icon"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #empty>
+    <div class="ui info message">
+      <div class="header">
+        There aren't registered employees
+      </div>
+      <ul class="list">
+        <li> To register an employee <a routerLink='/employees/add'> CLICK HERE</a> </li>
+      </ul>
+    </div>
+  </ng-template>
+</ng-template>
